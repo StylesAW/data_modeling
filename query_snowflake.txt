@@ -35,6 +35,7 @@ CREATE OR REPLACE TABLE champions (
 CREATE OR REPLACE TABLE matches (
     match_id VARCHAR,
     game_mode VARCHAR,
+    game_duration INT,
     puuid VARCHAR,
     riot_id_game_name VARCHAR,
     win BOOLEAN,
