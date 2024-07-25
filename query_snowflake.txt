@@ -1,0 +1,88 @@
+CREATE DATABASE LEAGUE_OF_LEGENDS_DATA;
+USE DATABASE LEAGUE_OF_LEGENDS_DATA;
+CREATE SCHEMA LOL_MATCH_STATS;
+
+
+USE SCHEMA LOL_MATCH_STATS;
+TRUNCATE TABLE MATCHES;
+DESCRIBE TABLE MATCHES;
+
+CREATE OR REPLACE TABLE items (
+    id INT PRIMARY KEY
+    name VARCHAR(255),
+    plaintext STRING,
+    gold_base INT,
+    gold_botal INT,
+    gold_sell INT
+);
+
+CREATE OR REPLACE TABLE items_stats (
+    item_id INT,
+    stat_name VARCHAR(255),
+    value INT,
+    FOREIGN KEY (item_id) REFERENCES items(id)
+);
+
+CREATE OR REPLACE TABLE champions (
+    id VARCHAR(255) PRIMARY KEY,
+    name VARCHAR(255),
+    title TEXT,
+    blurb TEXT,
+    tags TEXT,
+    partype VARCHAR
+)
+
+CREATE OR REPLACE TABLE matches (
+    match_id VARCHAR,         
+    puuid VARCHAR,
+    riotIdGameName VARCHAR,
+    win BOOLEAN,
+    lane VARCHAR,
+    role VARCHAR,
+    teamPosition VARCHAR,
+    kills INT,            
+    deaths INT,          
+    assists INT,          
+    totalMinionsKilled INT,
+    eligibleForProgression BOOLEAN,
+    timePlayed INT,
+    killingSprees INT,
+    firstBloodKill BOOLEAN,
+    firstTowerKill BOOLEAN,
+    doubleKills INT,
+    tripleKills INT,
+    quadraKills INT,
+    pentaKills INT,
+    wardsKilled INT,
+    wardsPlaced INT,
+    visionWardsBoughtInGame INT,
+    detectorWardsPlaced INT,
+    objectivesStolen INT,
+    turretKills INT,
+    dragonKills INT,
+    enemyMissingPings INT,
+    item0 INT,
+    item1 INT,
+    item2 INT,
+    item3 INT,
+    item4 INT,
+    item5 INT,
+    item6 INT,
+    goldEarned INT,
+    largestKillingSpree INT,
+    largestMultiKill INT,
+    magicDamageDealtToChampions INT,
+    magicDamageTaken INT,
+    neutralMinionsKilled INT,
+    participantId INT,
+    physicalDamageDealtToChampions INT,
+    physicalDamageTaken INT,
+    teamId INT,
+    totalDamageDealtToChampions INT,
+    totalDamageTaken INT,
+    totalHeal INT,
+    totalHealsOnTeammates INT,
+    trueDamageDealtToChampions INT,
+    trueDamageTaken INT,
+    visionScore INT
+);
