@@ -87,11 +87,13 @@ CREATE OR REPLACE TABLE matches (
     true_damage_dealt_to_champions INT,
     true_damage_taken INT,
     vision_score INT,
+    champion_id VARCHAR,
     FOREIGN KEY (item0) REFERENCES items(id),
     FOREIGN KEY (item1) REFERENCES items(id),
     FOREIGN KEY (item2) REFERENCES items(id),
     FOREIGN KEY (item3) REFERENCES items(id),
     FOREIGN KEY (item4) REFERENCES items(id),
     FOREIGN KEY (item5) REFERENCES items(id),
-    FOREIGN KEY (item6) REFERENCES items(id)
+    FOREIGN KEY (item6) REFERENCES items(id),
+    FOREIGN KEY (champion_id) REFERENCES champions(id)
 );
