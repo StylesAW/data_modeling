@@ -24,3 +24,9 @@ With the virtual environment activated, install the dependencies listed in the `
 pip install -r requirements.txt
 ```
 This command will install all the necessary libraries to run the Python script.
+
+### 3. Set Up Snowflake
+
+To use this project, you'll need to create an account in Snowflake. Once your account is set up, follow the next:
+
+- **Run the SQL Query**: Execute the query provided in the `query_snowflake.sql` file. This query will set up the necessary architecture in Snowflake to store and manage the data extracted from the League of Legends API. You can find this file [query_snowflake](https://github.com/StylesAW/data_modeling/blob/main/query_snowflake.sql)
