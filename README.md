@@ -35,6 +35,19 @@ To use this project, you'll need to create an account in Snowflake. Once your ac
 
 To ensure everything is functioning correctly, I will present some queries that I performed to explore the data. These queries were designed to investigate the data and provide insights into its quality. The queries can be found in the `Analysis/analytical_queries.sql` file or clicking [analytical_queries](Analysis/analytical_queries.sql).
 
+### Player Performance Analysis: Styles
+
+The following query extracts the performance statistics of the specific player **Styles** for each champion, including data on kills, deaths, and assists. It also calculates the **KDA (Kill/Death/Assist)** ratio, which provides insight into the player's performance with that specific champion.
+
+#### Understanding the KDA Calculation
+
+The KDA ratio is a measure of a player's skill and effectiveness during a game. It is calculated as follows:
+
+1. **Sum the number of kills and assists** performed by the player.
+2. **Divide the result by the number of times the player died** during the match.
+3. The resulting value is the **FINAL KDA**, where a higher KDA indicates superior performance and skill with the champion.
+
+
 ```sql
 SELECT 
     riot_id_game_name,  
