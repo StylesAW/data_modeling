@@ -51,7 +51,8 @@ The KDA ratio is a measure of a player's skill and effectiveness during a game. 
 ```sql
 SELECT 
     riot_id_game_name,  
-    CHAMPION_NAME, 
+    CHAMPION_NAME,
+    COUNT(*) as times_played,
     SUM(kills) as total_kills,
     SUM(assists) AS total_assists,
     SUM(deaths) AS total_deaths,
@@ -61,6 +62,10 @@ WHERE riot_id_game_name = 'Styles'
 GROUP BY riot_id_game_name, champion_name
 ORDER BY KDA DESC
 ```
+
+### Result
+![KDA](images/query_kda.png)
+
 
 ```sql
   SELECT
