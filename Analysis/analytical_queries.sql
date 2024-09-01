@@ -112,7 +112,10 @@ WHERE gold_total < 3800
 ORDER BY gold_total DESC
 
 --Show max and min minions killed by player before minute 20
-SELECT riot_id_game_name, MAX(total_minions_killed) AS max_minions_killed, MIN(total_minions_killed) AS min_minions_killed
+SELECT 
+    riot_id_game_name, 
+    MAX(total_minions_killed) AS max_minions_killed, 
+    MIN(total_minions_killed) AS min_minions_killed
 FROM MATCHES
 WHERE (game_duration/60) > 20
 GROUP BY riot_id_game_name
