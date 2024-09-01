@@ -66,17 +66,24 @@ ORDER BY KDA DESC
 ### Result
 ![KDA](images/query_kda.png)
 
+***
+
+### Most Used Items Analysis: Styles
+
+The following query displays the most frequently used items by the player **Styles**, along with their relevant data as id, name and gold total. It excludes items that are not relevant to this analysis, such as **'Farsight Alteration'**, **'Oracle Lens'**, and **'Stealth Ward'**, as these are vision options and do not directly impact the player's performance.
+
+#### Purpose of the Query
+
+This query helps identify the key items that contribute to the player's performance by focusing only on those that provide meaningful gameplay advantages. By filtering out vision items, the analysis remains focused on combat-related choices.
 
 ```sql
-  SELECT
-    A.match_id,
+SELECT
     A.riot_id_game_name,
     B.id,
     B.name,
     B.plaintext,
-    B.gold_base,
     B.gold_total,
-    B.gold_sell
+    COUNT(B.name) AS most_used_items
 FROM
     (SELECT riot_id_game_name, match_id, item0 AS item_id FROM matches
      UNION ALL
@@ -96,9 +103,18 @@ INNER JOIN
 ON 
     A.item_id = B.id
 WHERE riot_id_game_name = 'Styles'
-AND B.gold_total > 2000
-ORDER BY match_id;
+AND B.name <> 'Farsight Alteration'
+AND B.name <> 'Oracle Lens'
+AND B.name <> 'Stealth Ward'
+GROUP BY A.riot_id_game_name, B.id, B.name, B.plaintext, B.gold_total
+ORDER BY most_used_items DESC
+LIMIT 10;
 ```
+
+### Result 
+![most_used_items](images/most_used_items.png)
+
+***
 
 ```sql
 SELECT 
@@ -132,39 +148,6 @@ GROUP BY CHAMPION_NAME
 ORDER BY most_used_champions DESC
 ```
 
-```sql
-SELECT
-    A.riot_id_game_name,
-    B.id,
-    B.name,
-    B.plaintext,
-    B.gold_total,
-    COUNT(B.name) AS most_used_items
-FROM
-    (SELECT riot_id_game_name, match_id, item0 AS item_id FROM matches
-     UNION ALL
-     SELECT riot_id_game_name, match_id, item1 FROM matches
-     UNION ALL
-     SELECT riot_id_game_name, match_id, item2 FROM matches
-     UNION ALL
-     SELECT riot_id_game_name, match_id, item3 FROM matches
-     UNION ALL
-     SELECT riot_id_game_name, match_id, item4 FROM matches
-     UNION ALL
-     SELECT riot_id_game_name, match_id, item5 FROM matches
-     UNION ALL
-     SELECT riot_id_game_name, match_id, item6 FROM matches) A
-INNER JOIN 
-    items B
-ON 
-    A.item_id = B.id
-WHERE riot_id_game_name = 'Styles'
-AND B.name <> 'Farsight Alteration'
-AND B.name <> 'Oracle Lens'
-AND B.name <> 'Stealth Ward'
-GROUP BY A.riot_id_game_name, B.id, B.name, B.plaintext, B.gold_total
-ORDER BY most_used_items DESC;
-```
 
 ```sql
 SELECT riot_id_game_name ,AVG(game_duration/60) as average_in_minutes
