@@ -31,7 +31,7 @@ To use this project, you'll need to create an account in Snowflake. Once your ac
 
 - **Run the SQL Query**: Execute the query provided in the `query_snowflake.sql` file. This query will set up the necessary architecture in Snowflake to store and manage the data extracted from the League of Legends API. You can find this file [query_snowflake](https://github.com/StylesAW/data_modeling/blob/main/query_snowflake.sql)
 
-## Data Quality Check
+## Data Check
 
 To ensure everything is functioning correctly, I will present some queries that I performed to explore the data. These queries were designed to investigate the data and provide insights into its quality. The queries can be found in the `Analysis/analytical_queries.sql` file or clicking [analytical_queries](Analysis/analytical_queries.sql).
 
@@ -137,6 +137,14 @@ GROUP BY riot_id_game_name
 ### Result
 ![min_and_max_minions_killed](images/min_and_max_minions_killed.png)
 
+## Winrate Analysis: Styles
+
+The following query displays the total number of wins, total defeats, and the winrate of the player **Styles**. This analysis provides a clear view of the player's overall performance in terms of game outcomes.
+
+### Purpose of the Query
+
+This query helps to evaluate the success rate of Styles by calculating his winrate, which is a key metric to understand the effectiveness and consistency of the player in matches.
+
 ```sql
 SELECT 
     riot_id_game_name,
@@ -148,6 +156,10 @@ WHERE riot_id_game_name = 'Styles'
 GROUP BY riot_id_game_name
 ```
 
+Result
+![winrate](images/winrate.png)
+
+The purpose of this query is to highlight how often the player loses matches, which, along with the winrate, helps to provide a more complete picture of Styles' overall gameplay effectiveness.
 
 ```sql
 SELECT
@@ -159,7 +171,16 @@ WHERE riot_id_game_name = 'Styles'
 GROUP BY win
 ```
 
+Result
+![loss rate](images/lossrate.png)
 
+## Most Used Champions Analysis: Styles
+
+The following query displays the most frequently used champions by the player **Styles**. This analysis helps identify which champions Styles prefers and often relies on in his gameplay, providing insights into his playstyle and strategic preferences.
+
+### Purpose of the Query
+
+This query aims to highlight the champions that Styles uses most often, shedding light on his preferred picks and the champions with which he feels most comfortable or effective.
 
 ```sql
 SELECT champion_name, COUNT(champion_name) AS most_used_champions
@@ -169,6 +190,16 @@ GROUP BY CHAMPION_NAME
 ORDER BY most_used_champions DESC
 ```
 
+Result
+![most_used_champions](images/most_used_champions.png)
+
+## Average Match Duration Analysis: Styles
+
+The following query shows the average duration of matches played by the player **Styles**, measured in minutes. This metric provides insights into the typical length of games for Styles, which can reflect his playstyle and game strategy.
+
+### Purpose of the Query
+
+The goal of this query is to calculate the average match duration for Styles, helping to understand whether his games tend to be short, average, or extended in length, which can be indicative of his team’s play dynamics and pacing.
 
 ```sql
 SELECT riot_id_game_name ,AVG(game_duration/60) as average_in_minutes
@@ -176,6 +207,17 @@ FROM matches
 WHERE riot_id_game_name = 'Styles'
 GROUP BY riot_id_game_name
 ```
+
+Result
+![avg_game_duration](images/avg_game_duration.png)
+
+## Average Gold Earned Before 20 Minutes: Styles
+
+The following query shows the average amount of gold earned by the player **Styles** before the 20-minute mark. This analysis provides insights into the player's efficiency in accumulating resources during the early stages of the game.
+
+### Purpose of the Query
+
+This query aims to measure the economic performance of Styles during the early game by calculating the average gold earned before the 20-minute mark. A higher average indicates strong farming skills and effective resource management.
 
 ```sql
 SELECT riot_id_game_name,AVG(gold_earned) AS average_gold_earned
@@ -185,6 +227,16 @@ AND (game_duration/60) < 20
 GROUP BY riot_id_game_name
 ```
 
+Result
+![avg_gold_earned](images/avg_gold_earned.png)
+
+## Total Damage Dealt Ranking by Match: All Players
+
+The following query displays a ranking of the total damage dealt to other players by each player in each match. This analysis helps to identify the players who consistently contribute high amounts of damage during games.
+
+### Purpose of the Query
+
+The purpose of this query is to rank players based on the total damage they deal in matches, highlighting those who are the main damage dealers. It provides valuable insights into player performance and their impact on the game.
 
 ```sql
 SELECT 
@@ -196,4 +248,5 @@ SELECT
 FROM matches;
 ```
 
-
+Result
+![Rank_damage_dealt](images/rank_total_damage_dealt.png)
