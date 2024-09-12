@@ -3,7 +3,7 @@
 This is a Jupyter Notebook where I extract data from League of Legends API, transform it and dump that data into Snowflake and CSV files(optional). 
 Try to open the jupyter notebook [here](https://github.com/StylesAW/data_modeling/blob/main/data_modeling.ipynb)
 
-**The second part of this project is the repository [data_pipeline](https://github.com/StylesAW/data_pipeline_lol) , where the process is automated using different technologies.**
+**The second part of this project is the repository [league_data_ETL_pipeline](https://github.com/StylesAW/league_data_ETL_pipeline) , where the process is automated using different technologies.**
 
 ## Setting Up the Environment
 
