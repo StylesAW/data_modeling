@@ -92,6 +92,49 @@ AND B.name <> 'Stealth Ward'
 GROUP BY A.riot_id_game_name, B.id, B.name, B.plaintext, B.gold_total
 ORDER BY most_used_items DESC;
 
+--Improving the code using a CTE
+WITH items_union AS (
+    SELECT riot_id_game_name, match_id, item0 AS item_id FROM matches
+    UNION ALL
+    SELECT riot_id_game_name, match_id, item1 FROM matches
+    UNION ALL
+    SELECT riot_id_game_name, match_id, item2 FROM matches
+    UNION ALL
+    SELECT riot_id_game_name, match_id, item3 FROM matches
+    UNION ALL
+    SELECT riot_id_game_name, match_id, item4 FROM matches
+    UNION ALL
+    SELECT riot_id_game_name, match_id, item5 FROM matches
+    UNION ALL
+    SELECT riot_id_game_name, match_id, item6 FROM matches
+)
+SELECT
+    A.riot_id_game_name,
+    B.id,
+    B.name,
+    B.plaintext,
+    B.gold_total,
+    COUNT(B.name) AS most_used_items
+FROM
+    items_union A
+INNER JOIN 
+    items B
+ON 
+    A.item_id = B.id
+WHERE 
+    A.riot_id_game_name = 'Styles'
+    AND B.name NOT IN ('Farsight Alteration', 'Oracle Lens', 'Stealth Ward')
+GROUP BY 
+    A.riot_id_game_name, 
+    B.id, 
+    B.name, 
+    B.plaintext, 
+    B.gold_total
+ORDER BY 
+    most_used_items DESC
+LIMIT 10;
+
+
 --Show average match duration of player 'Styles' in minutes  
 SELECT riot_id_game_name ,AVG(game_duration/60) as average_in_minutes
 FROM matches
