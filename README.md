@@ -77,7 +77,7 @@ The following query displays the most frequently used items by the player **Styl
 This query helps identify the key items that contribute to the player's performance by focusing only on those that provide meaningful gameplay advantages. By filtering out vision items, the analysis remains focused on combat-related choices. A CTE was used to enhance the clarity and readability of the main query.
 
 ```sql
-WITH items_union AS (
+WITH items_union_cte AS (
     SELECT riot_id_game_name, match_id, item0 AS item_id FROM matches
     UNION ALL
     SELECT riot_id_game_name, match_id, item1 FROM matches
@@ -100,7 +100,7 @@ SELECT
     B.gold_total,
     COUNT(B.name) AS most_used_items
 FROM
-    items_union A
+    items_union_cte A
 INNER JOIN 
     items B
 ON 
