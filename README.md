@@ -74,9 +74,24 @@ The following query displays the most frequently used items by the player **Styl
 
 #### Purpose of the Query
 
-This query helps identify the key items that contribute to the player's performance by focusing only on those that provide meaningful gameplay advantages. By filtering out vision items, the analysis remains focused on combat-related choices.
+This query helps identify the key items that contribute to the player's performance by focusing only on those that provide meaningful gameplay advantages. By filtering out vision items, the analysis remains focused on combat-related choices. A CTE was used to enhance the clarity and readability of the main query.
 
 ```sql
+WITH items_union AS (
+    SELECT riot_id_game_name, match_id, item0 AS item_id FROM matches
+    UNION ALL
+    SELECT riot_id_game_name, match_id, item1 FROM matches
+    UNION ALL
+    SELECT riot_id_game_name, match_id, item2 FROM matches
+    UNION ALL
+    SELECT riot_id_game_name, match_id, item3 FROM matches
+    UNION ALL
+    SELECT riot_id_game_name, match_id, item4 FROM matches
+    UNION ALL
+    SELECT riot_id_game_name, match_id, item5 FROM matches
+    UNION ALL
+    SELECT riot_id_game_name, match_id, item6 FROM matches
+)
 SELECT
     A.riot_id_game_name,
     B.id,
@@ -85,34 +100,30 @@ SELECT
     B.gold_total,
     COUNT(B.name) AS most_used_items
 FROM
-    (SELECT riot_id_game_name, match_id, item0 AS item_id FROM matches
-     UNION ALL
-     SELECT riot_id_game_name, match_id, item1 FROM matches
-     UNION ALL
-     SELECT riot_id_game_name, match_id, item2 FROM matches
-     UNION ALL
-     SELECT riot_id_game_name, match_id, item3 FROM matches
-     UNION ALL
-     SELECT riot_id_game_name, match_id, item4 FROM matches
-     UNION ALL
-     SELECT riot_id_game_name, match_id, item5 FROM matches
-     UNION ALL
-     SELECT riot_id_game_name, match_id, item6 FROM matches) A
+    items_union A
 INNER JOIN 
     items B
 ON 
     A.item_id = B.id
-WHERE riot_id_game_name = 'Styles'
-AND B.name <> 'Farsight Alteration'
-AND B.name <> 'Oracle Lens'
-AND B.name <> 'Stealth Ward'
-GROUP BY A.riot_id_game_name, B.id, B.name, B.plaintext, B.gold_total
-ORDER BY most_used_items DESC
+WHERE 
+    A.riot_id_game_name = 'Styles'
+    AND B.name NOT IN ('Farsight Alteration', 'Oracle Lens', 'Stealth Ward')
+GROUP BY 
+    A.riot_id_game_name, 
+    B.id, 
+    B.name, 
+    B.plaintext, 
+    B.gold_total
+ORDER BY 
+    most_used_items DESC
 LIMIT 10;
 ```
 
 ### Result 
 ![most_used_items](images/most_used_items.png)
+
+
+
 
 ***
 
