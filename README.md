@@ -127,13 +127,13 @@ LIMIT 10;
 
 ***
 
-## Minions Killed Analysis Before 20 Minutes
+## Minions Killed Analysis after 20 Minutes
 
-The following query shows the maximum and minimum number of minions killed by a player before the 20-minute mark. This analysis helps to understand the player's early-game performance and efficiency in farming.
+The following query shows the maximum and minimum number of minions killed by a player after the 20-minute mark. This analysis helps to understand the player's late-game performance and efficiency in farming.
 
 ### Purpose of the Query
 
-This query aims to capture the extremes in minion kills, providing insight into the player's ability to farm effectively in the early stages of the game. It focuses on the period before the 20-minute mark to assess early-game efficiency.
+This query aims to capture the extremes in minion kills, providing insight into the player's ability to farm effectively in the late stages of the game. It focuses on the period after the 20-minute mark to assess early-game efficiency.
 
 ```sql
 SELECT
